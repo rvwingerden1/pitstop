@@ -9,13 +9,13 @@
 
     <div class="card-body">
       <div class="row">
-        <div class="col-12 col-md-6">
-          <app-form-field label="ETA">
-            <app-date-field required [(ngModel)]="details.eta"
-                            [appDefaultValue]="moment().add(1, 'hour').toISOString()"></app-date-field>
+        <div class="col-12" *ngIf="AppContext.isAdmin()">
+          <app-form-field label="Operator">
+            <app-select [ngModel]="null" (ngModelChange)="details.operatorId = $event.operatorId" type="text" required
+                        [optionsProvider]="operators" [formatter]="operatorFormatter"></app-select>
           </app-form-field>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12">
           <app-form-field label="Price (€)">
             <input [(ngModel)]="details.price" class="form-control" required>
           </app-form-field>

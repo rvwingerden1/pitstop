@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {View} from "src/app/common/view";
 import {Handler} from "src/app/common/handler";
-import {IncidentId, OfferDetails} from '@pitstop/typescriptmodels/pitstop';
+import {IncidentId, OfferDetails, Operator} from '@pitstop/typescriptmodels/pitstop';
 import {AppContext} from '../../../app-context';
-import moment from 'moment/moment';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-offer-modal',
@@ -12,9 +12,13 @@ import moment from 'moment/moment';
 })
 @Handler()
 export class OfferModalComponent extends View {
-  protected readonly moment = moment;
+  protected readonly AppContext = AppContext;
 
   incidentId: IncidentId;
   details: OfferDetails = {operatorId: AppContext.userProfile.operator}
+
+  operators : Observable<Operator[]> = this.subscribeTo("/api/operators");
+  operatorFormatter = (operator : Operator) => operator.details.name;
+
   updateInfo = () => this.sendCommand(`/api/incidents/${this.incidentId}/offers`, this.details);
 }

@@ -39,7 +39,7 @@
 
     <hr class="card-divider m-0 mb-3">
 
-    <div *ngIf="!AppContext.userProfile.operator && incident.offers.length === 0"
+    <div *ngIf="incident.offers.length === 0"
          class="small text-muted d-flex align-items-center justify-content-center flex-column">
       No offers yet
     </div>
@@ -52,7 +52,7 @@
         <app-assistance-overview-item [assistance]="assistance"></app-assistance-overview-item>
       </div>
       <div class="list-group-item py-3 pointer hover-underline" (click)="addOffer()"
-           *ngIf="!incident.acceptedOffer && AppContext.userProfile.operator">
+           *ngIf="!incident.acceptedOffer && (AppContext.userProfile.operator || AppContext.isAdmin())">
         <div class="row">
           <div class="col-auto">
             <i class="bi me-2 bi-plus-circle"></i>

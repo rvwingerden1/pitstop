@@ -1,0 +1,33 @@
+{
+  "@class": "com.example.app.refdata.api.command.RegisterOperators",
+  "commands": [
+    {
+      "@class": "com.example.app.refdata.api.command.RegisterOperator",
+      "operatorId": "allstate",
+      "details": {
+        "name": "Allstate Roadside Services"
+      }
+    },
+    {
+      "@class": "com.example.app.refdata.api.command.RegisterOperator",
+      "operatorId": "aaa",
+      "details": {
+        "name": "American Automobile Association"
+      }
+    },
+    {
+      "@class": "com.example.app.refdata.api.command.RegisterOperator",
+      "operatorId": "onstar",
+      "details": {
+        "name": "OnStar"
+      }
+    },
+    {
+      "@class": "com.example.app.refdata.api.command.RegisterOperator",
+      "operatorId": "betterworldclub",
+      "details": {
+        "name": "Better World Club"
+      }
+    }
+  ]
+}
