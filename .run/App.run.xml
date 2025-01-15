@@ -1,0 +1,31 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="App" type="Application" factoryName="Application">
+    <envs>
+      <env name="ENVIRONMENT" value="local" />
+      <env name="FLUX_APPLICATION_NAME" value="PitStop" />
+      <env name="FLUX_BASE_URL" value="ws://localhost:8888" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="com.example.app.App" />
+    <module name="pitstop" />
+    <option name="VM_PARAMETERS" value="-Xms16g -Xmx16g" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.example.app.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <extension name="net.ashald.envfile">
+      <option name="IS_ENABLED" value="false" />
+      <option name="IS_SUBST" value="false" />
+      <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+      <option name="IS_IGNORE_MISSING_FILES" value="false" />
+      <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+      <ENTRIES>
+        <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+      </ENTRIES>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

@@ -1,0 +1,5 @@
+{
+  "name": "@example/pitstop-typescriptmodels",
+  "version": "1.0.0",
+  "types": "core.d.ts"
+}

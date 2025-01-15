@@ -1,0 +1,17 @@
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "view": {
+      "aliases": ["v"],
+      "factory": "./view",
+      "description": "The schematic to automatically generate a View component.",
+      "schema": "./view/schema.json"
+    },
+    "standalone-handler": {
+      "aliases": ["sh"],
+      "factory": "./standalone-handler",
+      "description": "The schematic to automatically generate a Standalone handler.",
+      "schema": "./standalone-handler/schema.json"
+    }
+  }
+}

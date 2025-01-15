@@ -1,0 +1,9 @@
+import { Injectable } from '@angular/core';
+import {StandaloneHandler} from "src/app/common/standalone-handler";
+
+@Injectable({
+  providedIn: 'root'
+})
+export class <%= classify(name) %>Service extends StandaloneHandler {
+
+}

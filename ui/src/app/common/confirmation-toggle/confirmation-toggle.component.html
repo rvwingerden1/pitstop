@@ -1,0 +1,33 @@
+<span (click)="toggleModal()">
+  <span class="custom-delete-button"><ng-content></ng-content></span>
+  <span class="delete-button">
+    <button class="mx-2 btn p-0" type="button" title="Remove item" tabindex="-1">
+      <span class="bi bi-trash3-fill text-secondary"></span>
+    </button>
+  </span>
+</span>
+
+
+<div #modal class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="custom-modal-content">
+            <ng-content select=".modal-content"></ng-content>
+        </div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Remove item</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to remove this item?</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</a>
+                <button type="button" class="btn btn-primary" (click)="confirmed.emit(true)" data-bs-dismiss="modal">
+                    Remove item
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

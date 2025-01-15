@@ -1,0 +1,7 @@
+{
+  "@class": "com.fasterxml.jackson.databind.node.JsonNode",
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "johndoe@example.com",
+  "phoneNumber": "+1234567890"
+}

@@ -1,0 +1,8 @@
+{
+  "@class": "com.example.app.refdata.api.command.RegisterOperator",
+  "operatorId": "aaa",
+  "details": {
+    "name": "American Automobile Association"
+  },
+  "owner": "other"
+}

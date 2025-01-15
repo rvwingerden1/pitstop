@@ -1,0 +1,35 @@
+<app-form (submit)="updateInfo()">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-header-title">
+        <i class="bi bi-window-stack me-2"></i>
+        <span>Offer details</span>
+      </h3>
+    </div>
+
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <app-form-field label="ETA">
+            <app-date-field required [(ngModel)]="details.eta"
+                            [appDefaultValue]="moment().add(1, 'hour').toISOString()"></app-date-field>
+          </app-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+          <app-form-field label="Price (€)">
+            <input [(ngModel)]="details.price" class="form-control" required>
+          </app-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <div class="d-flex justify-content-between">
+        <a class="btn btn-secondary" data-bs-dismiss="modal">Cancel</a>
+        <button type="submit" class="btn btn-primary">
+          Add offer
+        </button>
+      </div>
+    </div>
+  </div>
+</app-form>

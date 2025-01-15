@@ -1,0 +1,66 @@
+<div class="card w-100">
+  <div class="card-body hover-show mb-3">
+    <app-confirmation-toggle>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Close incident</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to close this incident?</p>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <a type="button" class="btn btn-secondary"
+             data-bs-dismiss="modal">Cancel</a>
+          <button type="button" class="btn btn-primary" (click)="closeIncident()"
+                  data-bs-dismiss="modal">
+            Close incident
+          </button>
+        </div>
+      </div>
+
+      <button type="button" class="btn position-absolute top-0 end-0 to-show" role="button"
+              aria-expanded="false">
+        <i class="bi bi-trash"></i>
+      </button>
+    </app-confirmation-toggle>
+
+    <h2 class="card-title text-center notranslate">
+      <i class="bi bi-car-front-fill me-2"></i>
+      <a class="text-black hover-underline" [routerLink]="'incident/' + incident.incidentId">
+        <span class="me-2">{{ incident.details.vehicle.licensePlateNumber }}</span>
+      </a>
+    </h2>
+
+    <h5 class="text-muted text-center notranslate">
+      <app-date-field readonly [ngModel]="incident.start"></app-date-field>
+      <span class="ms-2" *ngIf="incident.details.location.name as location"><i class="bi bi-geo-alt"></i> {{ location }}</span>
+    </h5>
+
+    <hr class="card-divider m-0 mb-3">
+
+    <div *ngIf="!AppContext.userProfile.operator && incident.offers.length === 0"
+         class="small text-muted d-flex align-items-center justify-content-center flex-column">
+      No offers yet
+    </div>
+
+    <div class="hover-hide list-group-flush list-group overflow-y-auto overflow-x-hidden" [style.max-height.px]="200">
+      <ng-container *ngFor="let offer of incident.offers; trackBy: trackByOfferId">
+        <app-offer-overview-item [incident]="incident" [offer]="offer"></app-offer-overview-item>
+      </ng-container>
+      <div *ngIf="incident.assistance as assistance">
+        <app-assistance-overview-item [assistance]="assistance"></app-assistance-overview-item>
+      </div>
+      <div class="list-group-item py-3 pointer hover-underline" (click)="addOffer()"
+           *ngIf="!incident.acceptedOffer && AppContext.userProfile.operator">
+        <div class="row">
+          <div class="col-auto">
+            <i class="bi me-2 bi-plus-circle"></i>
+          </div>
+          <div class="col text-truncate"><small>Add new offer</small></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

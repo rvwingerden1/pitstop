@@ -1,0 +1,97 @@
+@import "node_modules/bootstrap/scss/functions";
+@import 'node_modules/bootstrap/scss/variables';
+@import 'libs/themes/dashkit/dist/assets/css/theme.bundle.css';
+@import 'libs/themes/dashkit/dist/assets/css/libs.bundle.css';
+
+:root {
+
+  .popover {
+    --bs-popover-max-width: 100rem;
+  }
+
+  #chart-tooltip {
+    position: fixed;
+    z-index: $zindex-popover;
+  }
+
+  #chart-tooltip.bs-popover-start .popover-arrow {
+    right: 0px;
+    left: auto;
+    top: 50%;
+    transform: translateX(0.5rem) !important;
+  }
+
+  #chart-tooltip.bs-popover-end .popover-arrow {
+    right: auto;
+    left: 0px;
+    top: 50%;
+    transform: translateX(-0.5rem) !important;
+  }
+
+  .btn-close {
+    background-size: 0.75em;
+    height: 0.75em;
+    width: 0.75em;
+  }
+
+  .form-control:disabled {
+    background-color: var(--bs-secondary-bg);
+  }
+
+  .navbar-user .dropup .dropdown-menu {
+    left: 0 !important;
+    transform: none !important;
+  }
+
+  .was-validated {
+    & .form-input.border-invalid,
+    & .form-select.border-invalid {
+      border-color: #e63757;
+    }
+  }
+
+  .navbar[class*=fixed-] {
+    z-index: 1020;
+  }
+
+  .navbar-nav .dropdown-menu {
+    border: var(--bs-dropdown-border-width) solid var(--bs-dropdown-border-color);
+  }
+
+  .dropdown-submenu {
+
+    &.dropstart .dropdown-toggle {
+      justify-content: stretch;
+
+      &:before {
+        display: inline-flex;
+        align-self: center;
+        margin-right: 0;
+        margin-left: -10px;
+        position: absolute;
+      }
+    }
+  }
+
+  .btn {
+    &.btn-close-wrapper {
+      padding: 4px;
+
+      &:hover {
+        background: $blue-200 !important;
+      }
+
+      &:active, &.active {
+        background: $blue-100 !important;;
+      }
+
+      & .btn-close {
+        margin: 0 !important;
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}

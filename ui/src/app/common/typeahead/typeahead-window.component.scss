@@ -1,0 +1,9 @@
+.dropdown-item.hover, .dropdown-item:hover, .dropdown-item:focus, .dropdown-item[is-active='true'] {
+  color: #fff;
+  text-decoration: none;
+  background-color: #007bff;
+}
+
+::ng-deep .modal .typeahead-dropdown {
+  position: fixed !important;
+}

@@ -1,0 +1,41 @@
+<div class="modal-header always-enabled">
+  <h4 class="modal-title" id="modal-title">
+    <ng-container [ngSwitch]="data.type">
+      <i *ngSwitchDefault class="bi bi-exclamation-triangle me-1 text-danger" aria-hidden="true"></i>
+      <i *ngSwitchCase="'warning'" class="bi bi-exclamation-triangle me-1 text-warning" aria-hidden="true"></i>
+      <i *ngSwitchCase="'info'" class="bi bi-exclamation-triangle me-1 text-info" aria-hidden="true"></i>
+      {{title}}
+    </ng-container>
+  </h4>
+  <div class="btn-close-wrapper rounded-circle position-absolute end-0 me-3">
+    <button type="button" class="btn-close m-0" aria-label="Close button" aria-describedby="modal-title" (click)="callback(null)"></button>
+  </div>
+</div>
+<div class="modal-body">
+  <ng-container *ngIf="data.body else defaultBody" [ngTemplateOutlet]="data.body"></ng-container>
+  <ng-template #defaultBody>
+    <p *ngIf="data.message">{{data.message}}</p>
+    <div *ngIf="data.innerHtmlMessage" [innerHTML]="data.innerHtmlMessage"></div>
+    <ul *ngFor="let point of points">
+      <li [innerHTML]="point"></li>
+    </ul>
+    <p *ngIf="data.afterPointsMessage">{{data.afterPointsMessage}}</p>
+    <app-form-field *ngIf="data.withReason" label="Reason">
+      <input class="form-control" required placeholder="Enter reason" [(ngModel)]="data.reason">
+    </app-form-field>
+    <p *ngIf="data.question">{{data.question}}</p>
+    <div *ngIf="data.innerHtmlQuestion" [innerHTML]="data.innerHtmlQuestion"></div>
+  </ng-template>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary me-3" (click)="callback(false)">{{cancelText}}</button>
+  <!-- Button style -->
+  <ng-container [ngSwitch]="data.type">
+    <button *ngSwitchDefault type="button" [appAutoFocus]="true" [autoFocusInOverlay]="true" class="btn btn-danger"
+            (click)="validateAndSubmit()">{{confirmText}}</button>
+    <button *ngSwitchCase="'warning'" type="button" [appAutoFocus]="true" [autoFocusInOverlay]="true"
+            class="btn btn-warning" (click)="validateAndSubmit()">{{confirmText}}</button>
+    <button *ngSwitchCase="'info'" type="button" [appAutoFocus]="true" [autoFocusInOverlay]="true" class="btn btn-info"
+            (click)="validateAndSubmit()">{{confirmText}}</button>
+  </ng-container>
+</div>

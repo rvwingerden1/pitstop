@@ -1,0 +1,29 @@
+<app-form (submit)="updateInfo()">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-header-title">
+        <i class="bi bi-window-stack me-2"></i>
+        <span>Operator details</span>
+      </h3>
+    </div>
+
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <app-form-field label="Operator name">
+            <input [(ngModel)]="details.name" class="form-control" required>
+          </app-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <div class="d-flex justify-content-between">
+        <a class="btn btn-secondary" data-bs-dismiss="modal">Cancel</a>
+        <button type="submit" class="btn btn-primary">
+          Register operator
+        </button>
+      </div>
+    </div>
+  </div>
+</app-form>

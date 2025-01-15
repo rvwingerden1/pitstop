@@ -1,0 +1,10 @@
+<div [hidden]="appUtils.pendingProcesses.length === 0" class="position-fixed row h-100 w-100 notranslate"
+     style="z-index: 15000;">
+  <div class="position-absolute bg-secondary h-100 w-100" style="opacity: 0.3"></div>
+  <div class="spinner-border mx-auto text-secondary align-self-center" role="status"
+       style="width: 5rem; height: 5rem; border-width: 1rem;"></div>
+</div>
+<div>
+  <router-outlet></router-outlet>
+  <app-confirmation-modal></app-confirmation-modal>
+</div>

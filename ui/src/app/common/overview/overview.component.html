@@ -1,0 +1,17 @@
+<div class="h-100">
+  <div class="row h-100">
+    <div class="col mh-100 d-flex flex-column align-items-stretch">
+      <ng-content select=".header-bar"></ng-content>
+      <div class="row flex-grow-1 mh-0">
+        <app-scroller (endReached)="loadNextPage()" [windowScroll]="windowScroll" class="col-12 px-0 mh-100">
+          <ng-content select=".overview-items"></ng-content>
+        </app-scroller>
+        <div class="w-100 h-100" [ngClass]="{'d-none': !isEmpty || loadCount === 0}">
+          <ng-content select=".empty-container"></ng-content>
+        </div>
+      </div>
+      <ng-content select=".overview-footer"></ng-content>
+    </div>
+  </div>
+</div>
+

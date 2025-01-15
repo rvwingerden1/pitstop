@@ -1,0 +1,6 @@
+<div #modal class="modal" role="dialog" tabindex="-1" [ngClass]="options?.animation" (click)="closeModalOnClick($event, modal)">
+  <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-md-down" [ngClass]="options?.cssClass" [style]="options?.style">
+    <ng-template #container></ng-template>
+  </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="options?.backdrop"></div>

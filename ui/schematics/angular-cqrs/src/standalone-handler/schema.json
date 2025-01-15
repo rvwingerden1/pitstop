@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "SchematicsAngularCQRSStandaloneHandler",
+  "title": "Angular CQRS Standalone Handler",
+  "type": "object",
+  "description": "Creates a new, generic component definition in the given project.",
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the Standalone Handler.",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use for the Standalone Handler?"
+    },
+    "path": {
+      "type": "string",
+      "$default": {
+        "$source": "workingDirectory"
+      },
+      "description": "The path at which to create the service, relative to the workspace root.",
+      "visible": false
+    },
+    "project": {
+      "type": "string",
+      "description": "The name of the project.",
+      "$default": {
+        "$source": "projectName"
+      }
+    },
+    "flat": {
+      "type": "boolean",
+      "default": true,
+      "description": "When true (the default), creates files at the top level of the project."
+    },
+    "skipTests": {
+      "type": "boolean",
+      "description": "Do not create \"spec.ts\" test files for the new service.",
+      "default": false
+    }
+  },
+  "required": ["name", "project"]
+}

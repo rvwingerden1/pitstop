@@ -1,0 +1,11 @@
+{
+  "@class": "com.example.app.user.api.command.CreateUser",
+  "userId": "user",
+  "details": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "johndoe@example.com",
+    "phoneNumber": "+1234567890"
+  },
+  "role": "user"
+}

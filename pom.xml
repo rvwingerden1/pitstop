@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.4.0</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.example</groupId>
+    <artifactId>pitstop</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>PitStop</name>
+    <description>Roadside assistance demo using Flux Capacitor</description>
+
+	<properties>
+        <java.version>21</java.version>
+        <flux-capacitor.version>0.1068.0</flux-capacitor.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <!--flux capacitor -->
+        <dependency>
+            <groupId>io.flux-capacitor</groupId>
+            <artifactId>java-client</artifactId>
+            <version>${flux-capacitor.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.flux-capacitor</groupId>
+            <artifactId>java-client</artifactId>
+            <scope>test</scope>
+            <classifier>tests</classifier>
+            <version>${flux-capacitor.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.flux-capacitor</groupId>
+            <artifactId>test-server</artifactId>
+            <version>${flux-capacitor.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.flux-capacitor</groupId>
+            <artifactId>proxy</artifactId>
+            <version>${flux-capacitor.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+		<!-- authentication -->
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>4.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>jwks-rsa</artifactId>
+			<version>0.22.1</version>
+		</dependency>
+
+		<!-- websocket updates to UI -->
+		<dependency>
+			<groupId>com.flipkart.zjsonpatch</groupId>
+			<artifactId>zjsonpatch</artifactId>
+			<version>0.4.16</version>
+		</dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/src/main/typescript-generator</directory>
+                <targetPath>${project.build.directory}/typescript-generator</targetPath>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>download-sources</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>resolve-sources</goal>
+                        </goals>
+                        <configuration>
+                            <includeGroupIds>io.flux-capacitor</includeGroupIds>
+                            <excludeClassifiers>tests</excludeClassifiers>
+                            <silent>true</silent>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>cz.habarta.typescript-generator</groupId>
+                <artifactId>typescript-generator-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>prepare-package</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jsonLibrary>jackson2</jsonLibrary>
+                    <customTypeMappings>
+                        <customTypeMapping>java.time.LocalDate:string</customTypeMapping>
+                        <customTypeMapping>java.time.LocalDateTime:string</customTypeMapping>
+                        <customTypeMapping>java.time.Duration:string</customTypeMapping>
+                        <customTypeMapping>java.time.Instant:string</customTypeMapping>
+                        <customTypeMapping>java.time.ZonedDateTime:string</customTypeMapping>
+                    </customTypeMappings>
+                    <classPatterns>
+                        <classPattern>com.example.app.**.api.**</classPattern>
+                    </classPatterns>
+                    <excludeClassPatterns>
+                        <excludeClassPattern>**Builder**</excludeClassPattern>
+                        <excludeClassPattern>**Deserializer</excludeClassPattern>
+                        <excludeClassPattern>java.lang.Class</excludeClassPattern>
+                        <excludeClassPattern>com.fasterxml.**</excludeClassPattern>
+                        <excludeClassPattern>io.fluxcapacitor.**</excludeClassPattern>
+                    </excludeClassPatterns>
+                    <outputKind>module</outputKind>
+                    <!-- See: src/main/typescript-generator/package.json -->
+                    <generateNpmPackageJson>false</generateNpmPackageJson>
+                    <optionalProperties>all</optionalProperties>
+                    <sortDeclarations>true</sortDeclarations>
+                    <noFileComment>true</noFileComment>
+                    <noTslintDisable>true</noTslintDisable>
+                    <noEslintDisable>true</noEslintDisable>
+                    <mapEnum>asEnum</mapEnum>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.15.1</version>
+                <configuration>
+                    <workingDirectory>target/typescript-generator</workingDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install Node and NPM</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <configuration>
+                            <nodeVersion>v22.12.0</nodeVersion>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>package typescript models</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>pack</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

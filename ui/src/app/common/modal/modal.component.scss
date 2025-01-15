@@ -1,0 +1,61 @@
+@import "node_modules/bootstrap/scss/functions";
+@import 'node_modules/bootstrap/scss/variables';
+@import "node_modules/bootstrap/scss/mixins";
+
+.zoom-in {
+  animation: zoomIn 0.5s;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.1, 0.1);
+  }
+  to {
+    transform: scale(1, 1);
+  }
+}
+
+@media (max-width: 767.98px) {
+  ::ng-deep app-modal .modal-dialog[class*="modal-fullscreen"] .card > .card-body {
+    height: 100px !important;
+    max-height: none !important;
+  }
+}
+
+::ng-deep app-modal {
+  & .modal-content > * {
+    flex-grow: 1;
+    display: flex;
+    align-items: stretch;
+
+    & .card,
+    &.card {
+      width: 100%;
+      margin-bottom: 0;
+      display: flex;
+      align-items: stretch;
+
+      & > .card-body {
+        flex-grow: 1;
+        overflow: auto;
+        min-height: 10vh;
+        max-height: 75vh;
+      }
+    }
+  }
+
+  & .modal-content > app-form > form {
+    flex-grow: 1;
+    display: flex;
+    max-width: 100%;
+  }
+
+  @include media-breakpoint-up(lg) {
+    & .modal-xxl {
+      width: 90%;
+      height: 90%;
+      min-width: 90%;
+      min-height: 90%;
+    }
+  }
+}

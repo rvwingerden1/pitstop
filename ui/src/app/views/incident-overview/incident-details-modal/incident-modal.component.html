@@ -1,0 +1,47 @@
+<app-form (submit)="updateInfo()">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-header-title">
+        <i class="bi bi-window-stack me-2"></i>
+        <span>Incident details</span>
+      </h3>
+    </div>
+
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12 position-relative" style="z-index: calc(1000 + 1)">
+          <app-form-field label="Vehicle">
+            <app-search [(ngModel)]="data.vehicle" required [minCharacters]="1"
+                        [searchFunction]="searchVehicles" [inputFormatter]="vehicleFormatter"
+                        dataKey="licensePlateNumber" placeholder="Search for vehicle"></app-search>
+          </app-form-field>
+        </div>
+        <div class="col-12">
+          <app-form-field label="Location">
+            <textarea
+              class="form-control m-2 position-absolute"
+              [ngClass]="{'invisible': !data.location?.name}" required
+                      [ngModel]="data.location && (data.location.latitude + ', ' + data.location.latitude + '\n' + data.location.name)"
+                      style="width: 250px; z-index: 1000">
+            </textarea>
+            <app-map-box (geoLocate)="data.location = $event"></app-map-box>
+          </app-form-field>
+        </div>
+        <div class="col-12">
+          <app-form-field label="Description">
+            <textarea class="form-control" [(ngModel)]="data.description" placeholder="Describe the incident"></textarea>
+          </app-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <div class="d-flex justify-content-between">
+        <a class="btn btn-secondary" data-bs-dismiss="modal">Cancel</a>
+        <button type="submit" class="btn btn-primary">
+          {{newRecord ? 'Report incident' : 'Save changes'}}
+        </button>
+      </div>
+    </div>
+  </div>
+</app-form>

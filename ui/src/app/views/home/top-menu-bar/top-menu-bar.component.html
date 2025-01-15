@@ -1,0 +1,24 @@
+<div class="navbar-user d-flex row" id="sidebarUser">
+  <a class="navbar-brand col-auto" [routerLink]="'/'">
+    <img src="/assets/images/logos/pitstop-logo.png" class="navbar-brand-img mx-auto" alt="Logo"
+         style="max-height: 3rem">
+    <h3 class="ms-3 d-inline">PitStop</h3>
+  </a>
+
+  <div class="col">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+
+  <div class="dropdown col-auto">
+    <a href="#" id="avatar-button" class="dropdown-toggle notranslate" role="button"
+       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <div class="avatar avatar-sm avatar-online">
+        <span class="avatar-title rounded-circle">{{ appContext.initials }}</span>
+      </div>
+    </a>
+    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="avatar-button">
+      <button class="dropdown-item" (click)="openModal(RegisterOperatorComponent)">Register operator</button>
+      <button class="dropdown-item" (click)="signOut()">Logout</button>
+    </div>
+  </div>
+</div>

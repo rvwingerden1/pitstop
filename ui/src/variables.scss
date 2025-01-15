@@ -1,0 +1,39 @@
+$pdf-page-width: 610pt;
+$color-class-a: rgb(74, 164, 91);
+$color-class-b: rgb(109, 181, 86);
+$color-class-c: rgb(194, 214, 82);
+$color-class-d: rgb(252, 242, 80);
+$color-class-e: rgb(243, 187, 68);
+$color-class-f: rgb(227, 120, 57);
+$color-class-g: rgb(217, 56, 50);
+$color-class-q: rgb(175,175,175);
+
+
+$energy-label-colors: (
+        'energy-label-G': $color-class-g,
+        'energy-label-F': $color-class-f,
+        'energy-label-E': $color-class-e,
+        'energy-label-D': $color-class-d,
+        'energy-label-C': $color-class-c,
+        'energy-label-B': $color-class-b,
+        'energy-label-A': $color-class-a,
+        'energy-label-q': $color-class-q
+);
+
+$prefix: "--"; //Prefix string for custom CSS properties
+
+//Merges a variable name with $prefix
+@function custom-property-name($name) {
+  @return $prefix + $name;
+}
+
+// Defines a custom property
+@mixin define-custom-property($name, $value) {
+  #{custom-property-name($name)}: $value;
+}
+
+body {
+  @each $name, $value in $energy-label-colors {
+    @include define-custom-property($name, $value);
+  }
+}

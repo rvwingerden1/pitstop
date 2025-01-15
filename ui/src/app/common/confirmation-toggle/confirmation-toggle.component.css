@@ -1,0 +1,15 @@
+.custom-delete-button:empty {
+  display: none;
+}
+
+.custom-delete-button:not(:empty) + .delete-button {
+  display: none;
+}
+
+.custom-modal-content:empty {
+  display: none;
+}
+
+.custom-modal-content:not(:empty) + .modal-content {
+  display: none;
+}

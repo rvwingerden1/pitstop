@@ -1,0 +1,18 @@
+<ng-container *ngIf="startTimestamp || endTimestamp">
+  <span class="me-2 bi bi-clock "></span>
+
+  <ng-container *ngIf="startTimestamp; else unknown">
+      <span class="me-1 " [ngClass]="startClass"
+            *ngIf="startTimestamp.date">{{startTimestamp.date}}</span><span>{{startTimestamp.time}}</span>
+  </ng-container>
+
+  <span [ngClass]="endClass">
+      <span> – </span>
+
+      <ng-container *ngIf="endTimestamp; else unknown">
+        <span class="me-1 " *ngIf="endTimestamp.date">{{endTimestamp.date}}</span><span>{{endTimestamp.time}}</span>
+      </ng-container>
+  </span>
+</ng-container>
+
+<ng-template #unknown><span class="me-1">?</span></ng-template>

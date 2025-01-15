@@ -1,0 +1,11 @@
+.search-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  z-index: 100;
+}
+
+::ng-deep .was-validated .ng-invalid + .search-icon {
+  display: none;
+}

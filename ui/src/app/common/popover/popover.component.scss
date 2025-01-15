@@ -1,0 +1,141 @@
+$popover-arrow-height: 0.5rem;
+$popover-arrow-width: 1rem;
+$popover-border-width: 1px;
+$popover-arrow-outer-color: #00000040;
+$popover-arrow-color: #fff;
+$popover-border-radius: 0.5;
+$popover-header-bg: white;
+
+.popover {
+  display: none;
+}
+
+.popover[data-show] {
+  display: block;
+}
+
+.popover.popover-p-0 .popover-body {
+  padding: 0;
+}
+
+.popover > .popover-arrow {
+  position: absolute;
+  display: block;
+  width: $popover-arrow-width;
+  height: $popover-arrow-height;
+  margin: 0 $popover-border-radius;
+
+  &::before,
+  &::after {
+    position: absolute;
+    display: block;
+    content: "";
+    border-color: transparent;
+    border-style: solid;
+    width: $popover-arrow-width;
+    height: $popover-arrow-height;
+  }
+}
+
+.bs-popover-top {
+  margin-bottom: $popover-arrow-height;
+
+  > .popover-arrow {
+    bottom: -$popover-arrow-height;
+
+    &::before {
+      bottom: 0;
+      border-width: $popover-arrow-height ($popover-arrow-width * .5) 0;
+      border-top-color: $popover-arrow-outer-color;
+    }
+
+    &::after {
+      bottom: $popover-border-width;
+      border-width: $popover-arrow-height ($popover-arrow-width * .5) 0;
+      border-top-color: $popover-arrow-color;
+    }
+  }
+}
+
+.bs-popover-right {
+  margin-left: $popover-arrow-height;
+
+  > .popover-arrow {
+    left: -$popover-arrow-width;
+    width: $popover-arrow-height;
+    height: $popover-arrow-width;
+    margin: $popover-border-radius 0;
+
+    &::before {
+      left: 0;
+      border-width: ($popover-arrow-width * .5) $popover-arrow-height ($popover-arrow-width * .5) 0;
+      border-right-color: $popover-arrow-outer-color;
+    }
+
+    &::after {
+      left: $popover-border-width;
+      border-width: ($popover-arrow-width * .5) $popover-arrow-height ($popover-arrow-width * .5) 0;
+      border-right-color: $popover-arrow-color;
+    }
+  }
+}
+
+.bs-popover-bottom {
+  margin-top: $popover-arrow-height;
+
+  > .popover-arrow {
+    top: -$popover-arrow-height;
+
+    &::before {
+      top: 0;
+      border-width: 0 ($popover-arrow-width * .5) $popover-arrow-height ($popover-arrow-width * .5);
+      border-bottom-color: $popover-arrow-outer-color;
+    }
+
+    &::after {
+      top: $popover-border-width;
+      border-width: 0 ($popover-arrow-width * .5) $popover-arrow-height ($popover-arrow-width * .5);
+      border-bottom-color: $popover-arrow-color;
+    }
+  }
+}
+
+.bs-popover-left {
+  margin-right: $popover-arrow-height;
+
+  > .popover-arrow {
+    right: -$popover-arrow-width;
+    width: $popover-arrow-height;
+    height: $popover-arrow-width;
+    margin: $popover-border-radius 0; // make sure the arrow does not touch the popover's rounded corners
+
+    &::before {
+      right: 0;
+      border-width: ($popover-arrow-width * .5) 0 ($popover-arrow-width * .5) $popover-arrow-height;
+      border-left-color: $popover-arrow-outer-color;
+    }
+
+    &::after {
+      right: $popover-border-width;
+      border-width: ($popover-arrow-width * .5) 0 ($popover-arrow-width * .5) $popover-arrow-height;
+      border-left-color: $popover-arrow-color;
+    }
+  }
+}
+
+.popover[data-popper-placement^='bottom'] {
+  bottom: -4px;
+}
+
+.popover[data-popper-placement^='top'] {
+  @extend .bs-popover-top;
+}
+.popover[data-popper-placement^='right'] {
+  @extend .bs-popover-right;
+}
+.popover[data-popper-placement^='bottom'] {
+  @extend .bs-popover-bottom;
+}
+.popover[data-popper-placement^='left'] {
+  @extend .bs-popover-left;
+}

@@ -1,0 +1,27 @@
+<div class="row hover-show">
+  <div class="col-auto ">
+    <i class="bi bi-person-badge"></i>
+  </div>
+  <div class="col-6 small">
+    {{assistance.assistantName || ''}}
+  </div>
+  <div class="col small">
+    <ng-container *ngIf="!assistance.ata && assistance.eta as eta">
+      <span class="badge bg-light text-dark">ETA</span>
+      {{eta | timestamp:'HH:mm'}}
+    </ng-container>
+    <ng-container *ngIf="assistance.ata as ata">
+      <span class="badge bg-success text-dark">ATA</span>
+      {{ata | timestamp:'HH:mm'}}
+    </ng-container>
+  </div>
+  <div class="col-auto" *ngIf="assistance.resolved; else unresolved">
+    <i class="bi bi-check-circle-fill text-success"></i>
+  </div>
+  <ng-template #unresolved>
+    <div class="col-auto">
+      <div class="spinner-border mx-auto text-light align-self-center" role="status"
+           style="width: 1rem; height: 1rem"></div>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,72 @@
+<!-- Form -->
+<app-form (submit)="updateInfo()">
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <app-form-field label="First name">
+        <input required [(ngModel)]="command.details.firstName" type="text" class="form-control">
+      </app-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <app-form-field label="Last name">
+        <input required [(ngModel)]="command.details.lastName" type="text" class="form-control">
+      </app-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <app-form-field label="Email">
+        <input required [(ngModel)]="command.details.email" type="email" class="form-control">
+      </app-form-field>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary">
+        Save changes
+      </button>
+    </div>
+  </div>
+
+
+  <!-- Divider -->
+  <hr class="my-5">
+
+  <div class="row justify-content-between align-items-center">
+    <div class="col-12 col-md-9">
+
+      <!-- Heading -->
+      <h4>
+        Delete your account
+      </h4>
+
+      <!-- Text -->
+      <p class="small text-muted mb-md-0">
+        Please note, deleting your account is a permanent action and will not be recoverable once completed.
+      </p>
+
+    </div>
+    <div class="col-auto">
+      <app-confirmation-toggle>
+        <button class="btn btn-danger" type="button">Delete account</button>
+        <div class="modal-content">
+          <div class="modal-card card">
+            <div class="card-header">
+              <h4 class="card-header-title">Delete account?</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="card-body">
+              <p>Are you sure you want to delete your user account? Deleting your account is permanent
+                and will not be recoverable once completed.</p>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+              <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</a>
+              <button type="button" class="btn btn-danger" (click)="deleteAccount()" data-bs-dismiss="modal">Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      </app-confirmation-toggle>
+
+    </div>
+  </div> <!-- / .row -->
+
+</app-form>

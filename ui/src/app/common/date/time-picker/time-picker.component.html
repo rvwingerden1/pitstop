@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col">
+    <input type="number" [max]="24" [min]="0" class="form-control" [(ngModel)]="_value.hour" [required]="required"
+           placeholder="Hours" (blur)="updateModel()">
+  </div>
+  <div class="col-auto p-0 d-flex align-items-center">
+    <span>:</span>
+  </div>
+  <div class="col">
+    <input type="number" [max]="60" [min]="0" class="form-control" [(ngModel)]="_value.minute" [required]="required"
+           placeholder="Minutes" (blur)="updateModel()">
+  </div>
+  <div class="col-auto p-0 d-flex align-items-center">
+    <span>:</span>
+  </div>
+  <div class="col">
+    <input type="number" [max]="60" [min]="0" class="form-control" [(ngModel)]="_value.second" [required]="required"
+           placeholder="Seconds" (blur)="updateModel()">
+  </div>
+</div>

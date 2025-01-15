@@ -1,0 +1,96 @@
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import "variables";
+
+:root {
+  --bs-body-bg-rgb: 237, 242, 249;
+  --bs-body-bg: rgb(var(--bs-body-bg-rgb));
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.h-0 {
+  height: 0 !important;
+}
+
+.mh-0 {
+  min-height: 0 !important;
+}
+
+.w-0 {
+  width: 0 !important;
+}
+
+.mw-0 {
+  min-width: 0 !important;
+}
+
+.cdk-overlay-container {
+  z-index: 1050;
+}
+
+.modal-xl .xl-content {
+  height: 70vh;
+}
+
+.hover-show {
+  &:hover :not(.hover-hide) {
+    .to-show {
+      visibility: visible;
+    }
+  }
+
+  :not(.hover-hide) .to-show {
+    visibility: hidden;
+  }
+}
+
+.hover-show .hover-hide .hover-show {
+  .to-show {
+    visibility: hidden;
+  }
+
+  &:hover .to-show {
+    visibility: visible;
+  }
+}
+
+.hover-underline:hover {
+  text-decoration: underline;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.notranslate {
+}
+
+.main-content {
+  margin: 0 !important;
+}
+
+.dropdown-backdrop.dropdown.show:before {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba($modal-backdrop-bg, $modal-backdrop-opacity);
+  content: '';
+  z-index: 1030;
+}
+
+.sub-text {
+  margin-top: 0.125rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: var(--bs-gray-600);
+  vertical-align: bottom;
+}

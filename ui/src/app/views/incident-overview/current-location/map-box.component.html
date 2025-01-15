@@ -1,0 +1,8 @@
+<div style="height: 400px;" class="w-100">
+    <mgl-map class="w-100 h-100" [style]="'mapbox://styles/mapbox/streets-v9'" [zoom]="[16]"
+             [center]="[4.48777379285398, 51.91885259819289]"
+             [attributionControl]="false">
+      <mgl-control mglGeolocate [showUserLocation]="true" [trackUserLocation]="true" (geolocate)="onLocationChange($event)"></mgl-control>
+        <mgl-control mglNavigation position="bottom-right"></mgl-control>
+    </mgl-map>
+</div>

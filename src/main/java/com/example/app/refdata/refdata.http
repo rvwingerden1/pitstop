@@ -1,0 +1,4 @@
+GET {{baseUrl}}/vehicles?term=Z613
+Content-Type: application/json
+
+###

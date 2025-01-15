@@ -1,0 +1,17 @@
+button.remove {
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+  color: white;
+  font-weight: bold;
+  opacity: 50%;
+  outline: none;
+}
+
+button.remove:disabled:hover {
+  opacity: 50%;
+}
+
+button.remove:hover {
+  opacity: 85%;
+}

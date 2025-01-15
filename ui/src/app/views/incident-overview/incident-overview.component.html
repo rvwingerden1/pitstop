@@ -1,0 +1,43 @@
+<div class="d-flex flex-column mb-4">
+  <div class="row gx-3">
+    <div class="col-auto">
+      <span class="h1 m-0"><i class="bi bi-car-front-fill"></i></span>
+    </div>
+    <div class="col">
+        <span class="text-black">
+          <h1 class="header-title text-truncate">Incidents</h1>
+        </span>
+    </div>
+  </div>
+</div>
+
+<app-overview [query]="query" (dataChange)="data = $event" [windowScroll]="true">
+  <div class="header-bar align-items-center row mb-4">
+    <div class="col">
+      <app-filter [(filterTerm)]="term" (onUpdate)="executeQuery()" placeholder="Search"></app-filter>
+    </div>
+    <div class="col-auto ms-auto d-flex flex-row align-items-center">
+      <button (click)="create()" type="button" class="btn btn-primary">
+        <i class="bi bi-plus me-md-2"></i>
+        <span class="d-none d-md-inline">Report incident</span>
+      </button>
+    </div>
+  </div>
+  <div class="overview-items">
+    <div class="row mx-0">
+      <ng-container *ngFor="let record of data; trackBy: trackByForRecord">
+        <div class="col-12 col-md-4" *ngIf="!record.end">
+          <app-incident-overview-item class="h-100 d-flex" [incident]="record"></app-incident-overview-item>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div class="empty-container col-12 h-100 d-flex align-items-center justify-content-center flex-column">
+    <span class="h1 mb-2">No incidents found</span>
+    <span class="text-secondary">Try adjusting your filters or search term or
+      <span class="text-primary hover-underline pointer" (click)="create()">
+        <span class="me-2">report a new incident</span>
+      </span>
+    </span>
+  </div>
+</app-overview>

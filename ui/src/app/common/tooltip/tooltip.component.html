@@ -1,0 +1,8 @@
+<span (click)="toggle()" (mouseenter)="open()" (mouseleave)="keepOpen ? null : close()" style="cursor: default">
+  <div style="display: none">
+    <div #tooltipContent>
+      <ng-content select=".tooltipContent"></ng-content>
+    </div>
+  </div>
+  <span #trigger [class]="wide ? '' : 'tooltip-normal'" data-bs-triggers="manual" data-bs-container="body"><ng-content></ng-content></span>
+</span>
