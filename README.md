@@ -21,7 +21,7 @@ The repository consists of two parts:
 - A backend written in Java, contained in the `/src` folder.
 - A frontend in Angular, found in the `/ui` folder.
 
-To get started:
+To get started:  
 
 - In `File -> Project Structure` select to use Java 21.
 - Via Intellij's run config menu, run:
