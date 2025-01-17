@@ -78,4 +78,4 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
           projectName: 'pitstop'
-          directory: 'dist/pitstop'
+          directory: 'ui/dist/pitstop'
