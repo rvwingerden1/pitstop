@@ -9,6 +9,6 @@ export const environment = {
   auth: {
     domain: "https://flux-host-dev-cv7hru.us1.zitadel.cloud",
     clientId: "284173040957349400",
-    redirectBaseUri: "http://localhost:4200",
+    redirectBaseUri: "pitstop.flux.host",
   }
 };
