@@ -6,11 +6,14 @@ import com.example.app.pitstop.api.IncidentId;
 import com.example.app.pitstop.api.OfferDetails;
 import com.example.app.pitstop.api.OfferId;
 import io.fluxcapacitor.javaclient.web.HandleGet;
+import io.fluxcapacitor.javaclient.web.HandleOptions;
 import io.fluxcapacitor.javaclient.web.HandlePost;
 import io.fluxcapacitor.javaclient.web.Path;
 import io.fluxcapacitor.javaclient.web.PathParam;
+import io.fluxcapacitor.javaclient.web.WebResponse;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.util.List;
 
 @Component
@@ -40,6 +43,15 @@ public class PitStopApi {
     @HandlePost("incidents/{incidentId}/close")
     void closeIncident(@PathParam IncidentId incidentId) {
         throw new UnsupportedOperationException();
+    }
+
+    @Path("/api/*")
+    @HandleOptions
+    WebResponse corsPreflight() {
+        return WebResponse.builder()
+                .header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, HEAD, TRACE")
+                .header("Access-Control-Max-Age", String.valueOf(Duration.ofDays(1).toSeconds()))
+                .build();
     }
 
 }

@@ -25,11 +25,11 @@ jobs:
       - name: Build with Maven
         run: mvn -B -T1C package
 
-      - name: Extract metadata (tags, labels) for aaa
+      - name: Extract metadata (tags, labels) for pitstop
         id: docker-meta
         uses: docker/metadata-action@v5
         with:
-          images: registry.flux.host/aaa
+          images: registry.flux.host/pitstop
 
       - name: Generate Flux Host JWT
         id: jwt
