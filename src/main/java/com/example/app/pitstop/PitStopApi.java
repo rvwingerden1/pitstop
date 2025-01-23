@@ -1,16 +1,11 @@
 package com.example.app.pitstop;
 
-import com.example.app.pitstop.api.Incident;
-import com.example.app.pitstop.api.IncidentDetails;
-import com.example.app.pitstop.api.IncidentId;
-import com.example.app.pitstop.api.OfferDetails;
-import com.example.app.pitstop.api.OfferId;
-import io.fluxcapacitor.javaclient.web.HandleGet;
-import io.fluxcapacitor.javaclient.web.HandleOptions;
-import io.fluxcapacitor.javaclient.web.HandlePost;
-import io.fluxcapacitor.javaclient.web.Path;
-import io.fluxcapacitor.javaclient.web.PathParam;
-import io.fluxcapacitor.javaclient.web.WebResponse;
+import com.example.app.pitstop.api.*;
+import com.example.app.pitstop.api.command.OfferAssistance;
+import com.example.app.pitstop.api.command.ReportIncident;
+import com.example.app.pitstop.api.query.FindIncidents;
+import io.fluxcapacitor.javaclient.FluxCapacitor;
+import io.fluxcapacitor.javaclient.web.*;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -22,17 +17,27 @@ public class PitStopApi {
 
     @HandlePost("incidents")
     IncidentId reportIncident(IncidentDetails details) {
-        throw new UnsupportedOperationException();
+        IncidentId incidentId = IncidentId.newValue();
+        FluxCapacitor.sendCommandAndWait(ReportIncident.builder()
+                .incidentId(incidentId)
+                .details(details)
+                .build());
+        return incidentId;
     }
 
     @HandleGet("incidents")
     List<Incident> getIncidents() {
-        return List.of();
+        return FluxCapacitor.queryAndWait(new FindIncidents());
     }
 
     @HandlePost("incidents/{incidentId}/offers")
     OfferId offerAssistance(@PathParam IncidentId incidentId, OfferDetails details) {
-        throw new UnsupportedOperationException();
+        OfferId offerId = OfferId.newValue();
+        FluxCapacitor.sendCommandAndWait(OfferAssistance.builder()
+                .incidentId(incidentId)
+                .offer(Offer.builder().offerId(offerId).details(details).build())
+                .build());
+        return offerId;
     }
 
     @HandlePost("incidents/{incidentId}/offers/{offerId}/accept")
