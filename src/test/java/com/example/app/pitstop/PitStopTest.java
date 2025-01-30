@@ -2,6 +2,7 @@ package com.example.app.pitstop;
 
 import com.example.app.pitstop.api.*;
 import com.example.app.pitstop.api.command.AcceptOffer;
+import com.example.app.pitstop.api.command.CloseIncident;
 import com.example.app.pitstop.api.command.OfferAssistance;
 import com.example.app.pitstop.api.command.ReportIncident;
 import com.example.app.pitstop.api.query.FindIncidents;
@@ -11,6 +12,7 @@ import io.fluxcapacitor.common.serialization.JsonUtils;
 import io.fluxcapacitor.javaclient.FluxCapacitor;
 import io.fluxcapacitor.javaclient.modeling.Entity;
 import io.fluxcapacitor.javaclient.test.TestFixture;
+import io.fluxcapacitor.javaclient.tracking.handling.IllegalCommandException;
 import org.junit.jupiter.api.Test;
 
 import java.time.Clock;
@@ -18,7 +20,6 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
-import java.util.Optional;
 
 import static java.time.ZoneOffset.UTC;
 
@@ -30,6 +31,10 @@ class PitStopTest {
 
     public static final IncidentId INCIDENT_ID = new IncidentId("test_incident");
     public static final OfferId OFFER_ID = new OfferId("test_offer");
+    public static final AcceptOffer ACCEPT_OFFER = AcceptOffer.builder()
+            .incidentId(INCIDENT_ID).offerId(OFFER_ID).build();
+    public static final CloseIncident CLOSE_INCIDENT = CloseIncident.builder()
+            .incidentId(INCIDENT_ID).build();
 
     public static final IncidentDetails INCIDENT_DETAILS = JsonUtils.fromFile(
             "/pitstop/incident-details.json", IncidentDetails.class);
@@ -74,7 +79,7 @@ class PitStopTest {
     void acceptOffer() {
         // FindIncidents implements Request<List<Incident>>, therefore no casting is necessary!
         testFixture.givenCommands(REPORT_INCIDENT, OFFER_ASSISTANCE)
-                .whenCommand(AcceptOffer.builder().offerId(OFFER_ID).build())
+                .whenCommand(ACCEPT_OFFER)
                 .andThen()
                 .whenQuery(new FindIncidents())
                 .mapResult(incidents -> incidents.getFirst().getOffers().getFirst())
@@ -84,7 +89,7 @@ class PitStopTest {
     @Test
     void acceptOfferMostCleanTest() {
         testFixture.givenCommands(REPORT_INCIDENT, OFFER_ASSISTANCE)
-                .whenCommand(AcceptOffer.builder().offerId(OFFER_ID).build())
+                .whenCommand(ACCEPT_OFFER)
                 .expectThat(fluxCapacitor -> {
                     FluxCapacitor.loadEntity(OFFER_ID)
                             .mapIfPresent(Entity::get)
@@ -97,5 +102,33 @@ class PitStopTest {
                             .map(Offer::isAccepted)
                             .orElseThrow(() -> new AssertionError("Accepted Offer is niet bijgewerkt in het incident"));
                 });
+    }
+
+    @Test
+    void closeIncident() {
+        testFixture.givenCommands(REPORT_INCIDENT, OFFER_ASSISTANCE, ACCEPT_OFFER)
+                .whenCommand(CLOSE_INCIDENT)
+                .expectEvents(CLOSE_INCIDENT);
+    }
+
+    @Test
+    void closingIncidentOnlyWhenOfferAccepted() {
+        testFixture.givenCommands(REPORT_INCIDENT, OFFER_ASSISTANCE)
+                .whenCommand(CLOSE_INCIDENT)
+                .expectError(IllegalCommandException.class);
+    }
+
+    @Test
+    void alreadyClosedIncidentCanNotBeClosedAgain() {
+        testFixture.givenCommands(REPORT_INCIDENT, OFFER_ASSISTANCE, ACCEPT_OFFER, CLOSE_INCIDENT)
+                .whenCommand(CLOSE_INCIDENT)
+                .expectError(IllegalCommandException.class);
+    }
+
+    @Test
+    void cannotCloseIncidentWithoutReportingFirst() {
+        testFixture
+                .whenCommand(CLOSE_INCIDENT)
+                .expectError(IllegalCommandException.class);
     }
 }

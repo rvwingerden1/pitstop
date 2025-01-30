@@ -1,6 +1,7 @@
 package com.example.app.pitstop;
 
 import com.example.app.pitstop.api.*;
+import com.example.app.pitstop.api.command.AcceptOffer;
 import com.example.app.pitstop.api.command.OfferAssistance;
 import com.example.app.pitstop.api.command.ReportIncident;
 import com.example.app.pitstop.api.query.FindIncidents;
@@ -42,7 +43,7 @@ public class PitStopApi {
 
     @HandlePost("incidents/{incidentId}/offers/{offerId}/accept")
     void acceptOffer(@PathParam IncidentId incidentId, @PathParam OfferId offerId) {
-        throw new UnsupportedOperationException();
+        FluxCapacitor.sendCommandAndWait(AcceptOffer.builder().incidentId(incidentId).offerId(offerId).build());
     }
 
     @HandlePost("incidents/{incidentId}/close")

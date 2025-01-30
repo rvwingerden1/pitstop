@@ -64,6 +64,19 @@ class PitStopViaApiTest {
     }
 
     @Test
+    void acceptOffer() {
+        testFixture
+                .givenPost("/api/incidents", FileUtils.loadFile("/pitstop/incident-details.json"))
+                .givenPost("/api/incidents/0/offers", FileUtils.loadFile("/pitstop/offer-details.json"))
+                .whenPost("/api/incidents/0/offers/1/accept", "{}")
+                .andThen()
+                .whenGet("api/incidents")
+                .<List<Incident>>mapResult(webResponse -> ((WebResponse)webResponse).getPayload())
+                .mapResult(List::getFirst)
+                .expectResult("/pitstop/expected/incident-with-accepted-offer.json");
+    }
+
+    @Test
     void testCorsPreflight() {
         testFixture.whenWebRequest(WebRequest.builder().method(HttpRequestMethod.OPTIONS)
                         .url("/api/user").build())

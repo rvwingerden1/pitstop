@@ -1,7 +1,7 @@
 package com.example.app.pitstop.handler;
 
 import com.example.app.pitstop.api.Incident;
-import com.example.app.pitstop.api.command.AcceptOffer;
+import com.example.app.pitstop.api.command.IncidentCommand;
 import io.fluxcapacitor.javaclient.FluxCapacitor;
 import io.fluxcapacitor.javaclient.tracking.handling.HandleCommand;
 import org.springframework.stereotype.Component;
@@ -13,13 +13,14 @@ public class IncidentCommandHandler {
         FluxCapacitor.loadAggregate(command.getIncidentId(), Incident.class)
                 .assertAndApply(command);
     }
-
-
-    //For Members of Incident (e.g. Offer)
-    @HandleCommand
-    Object handle(AcceptOffer command) {
-        return FluxCapacitor.loadEntity(command.getOfferId()).assertAndApply(command).get();
-//        return FluxCapacitor.loadAggregateFor(command.getOfferId(), Offer.class)
-//                .assertAndApply(command).get();
-    }
+//    @HandleCommand
+//    void handle(AcceptOffer command) {
+//        FluxCapacitor.loadAggregateFor(command.getOfferId(), Offer.class)
+//                .assertAndApply(command);
+//    }
+//    @HandleCommand
+//    void handle(AcceptOffer command) {
+//        FluxCapacitor.loadEntity(command.getOfferId())
+//                .assertAndApply(command);
+//    }
 }
