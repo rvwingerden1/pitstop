@@ -1,0 +1,11 @@
+{
+  "@class": "com.example.app.pitstop.api.command.OfferAssistance",
+  "incidentId": "0",
+  "offer" : {
+    "offerId" : "1",
+    "details" : {
+      "operatorId" : "2",
+      "price" : 10
+    },
+    "accepted" : false
+  }}
