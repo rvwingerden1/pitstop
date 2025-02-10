@@ -10,7 +10,7 @@
     <option name="VM_PARAMETERS" value="-Xms16g -Xmx16g" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.example.app.*" />
+        <option name="PATTERN" value="com.example.app.pitstop.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

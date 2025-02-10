@@ -26,12 +26,6 @@ public class CloseIncident implements UpdateIncidentCommand {
                 });
     }
 
-    @AssertLegal
-    void mustHaveOfferAccepted(Incident incident) {
-        incident.getAcceptedOffer()
-                .orElseThrow(() -> new IllegalCommandException("No accepted offer present!"));
-    }
-
     @Apply
     Incident apply(Incident incident, Message message) {
         return incident.toBuilder()

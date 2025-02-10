@@ -31,6 +31,8 @@ public class Incident {
 
     Assistance assistance;
 
+    boolean escalated;
+
     @JsonIgnore
     @SuppressWarnings("unused")
     public Optional<Offer> getAcceptedOffer() {

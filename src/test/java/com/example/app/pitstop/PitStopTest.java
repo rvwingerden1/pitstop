@@ -1,10 +1,7 @@
 package com.example.app.pitstop;
 
 import com.example.app.pitstop.api.*;
-import com.example.app.pitstop.api.command.AcceptOffer;
-import com.example.app.pitstop.api.command.CloseIncident;
-import com.example.app.pitstop.api.command.OfferAssistance;
-import com.example.app.pitstop.api.command.ReportIncident;
+import com.example.app.pitstop.api.command.*;
 import com.example.app.pitstop.api.query.FindIncidents;
 import com.example.app.pitstop.handler.IncidentCommandHandler;
 import com.example.app.pitstop.handler.IncidentQueryHandler;
@@ -21,12 +18,14 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 
+import static com.example.app.pitstop.IncidentLifeCycleHandler.ESCALATE;
+import static com.example.app.pitstop.IncidentLifeCycleHandler.INCIDENT_CLOSING_TIME;
 import static java.time.ZoneOffset.UTC;
 
 class PitStopTest {
     final Instant NOW = LocalDateTime.parse("2020-12-01T09:41:52.300").atZone(UTC).toInstant();
     final TestFixture testFixture = TestFixture.create(IncidentCommandHandler.class,
-                    IncidentQueryHandler.class)
+                    IncidentQueryHandler.class, IncidentLifeCycleHandler.class)
             .withClock(Clock.fixed(NOW, ZoneId.systemDefault()));
 
     public static final IncidentId INCIDENT_ID = new IncidentId("test_incident");
@@ -112,13 +111,6 @@ class PitStopTest {
     }
 
     @Test
-    void closingIncidentOnlyWhenOfferAccepted() {
-        testFixture.givenCommands(REPORT_INCIDENT, OFFER_ASSISTANCE)
-                .whenCommand(CLOSE_INCIDENT)
-                .expectError(IllegalCommandException.class);
-    }
-
-    @Test
     void alreadyClosedIncidentCanNotBeClosedAgain() {
         testFixture.givenCommands(REPORT_INCIDENT, OFFER_ASSISTANCE, ACCEPT_OFFER, CLOSE_INCIDENT)
                 .whenCommand(CLOSE_INCIDENT)
@@ -130,5 +122,42 @@ class PitStopTest {
         testFixture
                 .whenCommand(CLOSE_INCIDENT)
                 .expectError(IllegalCommandException.class);
+    }
+
+    @Test
+    void closesIncidentAutomatically() {
+        testFixture.givenCommands(REPORT_INCIDENT)
+                .whenTimeElapses(INCIDENT_CLOSING_TIME)
+                .expectEvents(CloseIncident.class);
+    }
+
+    @Test
+    void cancelsScheduleWhenIncidentAccepted() {
+        testFixture.givenCommands(REPORT_INCIDENT, OFFER_ASSISTANCE)
+                .whenCommand(ACCEPT_OFFER)
+                .andThen()
+                .whenTimeElapses(INCIDENT_CLOSING_TIME)
+                .expectNoEventsLike(CloseIncident.class);
+    }
+
+    @Test
+    void escalatesIncident() {
+        testFixture.givenCommands(REPORT_INCIDENT)
+                .whenTimeElapses(ESCALATE)
+                .expectEvents(EscalateIncident.class);
+    }
+
+    @Test
+    void cannotEscalateWheneverAlreadyAcceptedOffer() {
+        testFixture.givenCommands(REPORT_INCIDENT, OFFER_ASSISTANCE, ACCEPT_OFFER)
+                .whenCommand(EscalateIncident.builder().incidentId(INCIDENT_ID).build())
+                .expectError(IllegalCommandException.class);
+    }
+
+    @Test
+    void cancelsEscalationScheduleWhenIncidentAccepted() {
+        testFixture.givenCommands(REPORT_INCIDENT, OFFER_ASSISTANCE, ACCEPT_OFFER)
+                .whenTimeElapses(ESCALATE)
+                .expectNoEventsLike(EscalateIncident.class);
     }
 }
